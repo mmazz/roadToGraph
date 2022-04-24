@@ -1,0 +1,117 @@
+\documentclass[12pt, oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, calrsfs, wasysym, verbatim,  color, graphics, geometry}
+
+\geometry{tmargin=.75in, bmargin=.75in, lmargin=.75in, rmargin = .75in}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Cdot}{\boldsymbol{\cdot}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{conv}{Convention}
+\newtheorem{rem}{Remark}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+
+
+\title{Resume: }
+\author{Matias Mazzanti}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\vspace{.25in}
+
+\section{ToDo}
+\begin{itemize}
+  \item Probabilidades (marginal, condicional, etc)
+  \item CrossValidation vs Test
+  \item Combinations and permutation
+  \item Poisson distribution
+  \item Random Walk
+  \item Divergencia de KL
+  \item Probabilistic generative model (generative?)
+  \item Likelihood
+  \item Metric (evidence)
+  \item Multivariant Gaussian
+  \item TrueSkill draw
+\end{itemize}
+
+
+\section{Algoritmo 3}
+Algoritmo eficiente = orden polinomial
+Algoritmo no eficiente = exponencial
+
+Tecnicas de diseño de algoritmos
+\begin{itemize}
+  \item Fuerza bruta
+  \item Backtracking
+  \item Algoritmos golosos
+  \item Recursividad
+  \item Dividir y conquistar
+  \item Programacion dinamica
+  \item Heuristicas y algoritmos aproximados
+\end{itemize}
+
+\subsection{Clase1}
+Ej: allar todas las formas posibles de colocar n reinas en un tablero de ajedrez de n x n casillas,
+de forma que ninguna reina amenace a la otra.
+\paragraph{Fuerza bruta}:
+Analizar todas las posibilidades y quedarme con las que me interesan.
+
+Solucion, genero TODAS las posibilidades y veo cuales cumplen.
+Tengo n*n casillas y tengo que poner n reinas.
+Tengo el combinatorio de (n$^2$ n) de posibilidades.
+
+\paragraph{Backtracking}:
+Tecnica para recorrer sistematicamente todas las posibles configuraciones del espacio de soluciones.
+Las posibles configuraciones las llamamos soluciones validas.
+Se parece a fuerza bruta pero aprovecha propiedades del problema para evitar analizar todas
+las configuraciones posibles.
+Se suele armar un vector de las soluciones candidatas.
+Se puede pensar este espacio de busqueda como un arbol dirigido donde cada
+vertice representa una solucion parcial.
+Un vertice x es hijo de y si la solucion parcial de x se puede extender desde la
+solucion parcial y.
+La raiz del arbol se corresponde con el vector vacio.
+Los vertices del primer nivel del arbol seran las soluciones parciales que ya tienen definidas
+el primer elemento.
+Los de segundo nivel las que tienen los dos primeros y asi siguierndo.
+Si el vertice x corresponde a la solucion parcial a = $(a_1, a_2,...,a_k)$ por
+cada valor posible que puede tomar $a_{k+1}$ se ramifica el arbol, generando
+tantos hijos de x como posibilidades haya para $a_{k+1}$.
+Las soluciones completas (cuando todos los$a_i$ tienen valor) corresponden a las
+hojas del arbol.
+Cuando podemos deducir que una solucion parcial no nos llevara a una solucion valida, no
+es necesario seguir explorando esa rama del arbol de busqueda (se poda el arbol) y se
+retrocede hasta encontrar un vertice con un hijo valido por donde seguir la exploracion.
+
+Puedo podar tanto por factibilidad, que es cuando ninguna extension de la solucion parcial
+derivara en una solucion valida del problema.
+O bien por optimalidad, en que ninguna extension de la solucion parcial derivara en una solucion
+del prblema optima.
+En este ultimo caso puedo cortar la busqueda una vez que se que la solucion aparente que
+puedo encontrar por una rama va a ser peor (en el sentido del problema) a alguna que ya encontre.
+Para poder aplicar la poda por factibilidad, la representacion de las soluciones debe cumplir que
+si una solucion parcial $a$ no cumple las propiedades deseadas, tampoco lo hara cualquier
+extension posible de ella (propiedad domino).
+
+Solucion: Imaginemos n=8. Las soluciones parciales $a$, las puedo pensar como
+cada valor como el valor de la fila i-esima (columna donde esta la reina en esa fila).
+Con esto puedo pedir que no haya numeros repetidos, ya que seria reinas en misma columna y se
+amenazarian.
+Puedo pedir que cuando voy a agregar un nuevo valor $a_k$, que no este en la diagonal
+de ningun valor anterior.
+Ej: Sucesores(a,k) = $(a,a_k): \{a_k \in \{1,...,8\}, a_k-a_j \notin\{k-j,0,j-k\}\forall j\in\{1,...,k-1\}\}.$
+
+\subsection{clase2}
+
+
+\end{document}
