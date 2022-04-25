@@ -112,6 +112,53 @@ de ningun valor anterior.
 Ej: Sucesores(a,k) = $(a,a_k): \{a_k \in \{1,...,8\}, a_k-a_j \notin\{k-j,0,j-k\}\forall j\in\{1,...,k-1\}\}.$
 
 \subsection{clase2}
+\paragraph{Algos golosos}:
+Construir una solucion seleccionando en cada paso la mejor alternativa posible localmente
+(de ahi lo goloso, se come lo mejor en el momento sin importarle el futuro)
+segun una funcion de seleccion, sin considerar (o haciendolo debilmente)
+las implicancias de esta seleccion.
+Son eficientes ya que una decision tomada nunca es revisada y no se evaluan alternativas.
+A pesar de que son faciles de pensar e implementar no siempre funcionan.
+Algunos problemas no pueden ser resueltos por este enfoque.
 
+Proporcionan heuristicas (algoritmos que me dan soluciones validad pero no necesariamente
+la mejor) sencillas para problemas de optimizacion.
+En generar permiten construir soluciones razonables, pero suboptimas.
+Tengo que elegir la funcion de seleccion en cada caso.
+
+Un ejemplo seria el problema de la mochila (continuo, permito poner fracciones de objetos).
+Quiero llenar una mochina con un limite de peso maximizando el beneficio.
+Entonces el algoritmo es agrego objetos mientras no me exceda de peso.
+Y utilizo una funcion de seleccion como mayor beneficio, o el de menor peso, o
+el que tiene mayor benificio por unidad de peso (b/p).
+
+\paragraph{Programacion dinamica}
+Al igual que D$\&$C, el problema es dividido en subproblemas de tamaño menores que son mas faciles
+de resolver.
+Una vez resueltos estos subproblemas, se combinan las soluciones obtenidas para generar
+la solucion del problema original.
+Sirve para problemas de optimizacion combinatoria y tambien los de naturaleza recursiva.
+Este tipo de algoritmos se usan cuando los problemas tienen la caracteristica de
+resolver varias veces un subproblema.
+Con divide and conquer se resolveria el mismo problema tantas veces como se llamen.
+Aca evita repetir llamadas recursivas almacenando los resultados calculados.
+La estructura donde guardamos los datos se llama esquema de memoizacion.
+Puede tener una forma de seleccionar que resultados de subproblemas guardar.
+
+Un ejemplo claro es para calcular el factorial.
+Luego el esquema puede ser top-down o bottom-up.
+Tomando el ejemplo del factorial, voy utilizando y veo si ya calcule un dado valor,
+si no lo calculo y lo meto ahi (en general llego asi hasta el caso base y vuelvo
+a subir en la recurscion).
+Si no bottom-up, precalculo y agrego la informacion trivial.
+Asi puedo ir calculando y llenando la tabla hasta llegar al valor que quiero.
+Empiezo por las sub-instancias mas chicas y voy subiendo.
+
+\paragraph{Heuristicos}:
+ Son los algoritmos que intenta obtener solucion de buena calidad para el problema
+ que se quiere resolver pero no necesariamente lo hace en todos los casos.
+ No se puede asegurar que tan lejos esta la solucion encontrada con este metodo
+ a la solucion optima.
+ Si si puedo decir que tan lejos o cerca estoy se le dice algoritmo aproximado.
 
 \end{document}
