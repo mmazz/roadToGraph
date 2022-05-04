@@ -161,4 +161,185 @@ Empiezo por las sub-instancias mas chicas y voy subiendo.
  a la solucion optima.
  Si si puedo decir que tan lejos o cerca estoy se le dice algoritmo aproximado.
 
+\section{Clase 3: Grafos}
+Un grafo G=(V,X) es un par de conjuntos, donde V es un conjunto de puntos o nodos o \textbf{vertices}
+ y X es un  subconjunto del conjunto de pares no ordenados de elementos distintos de V.
+
+Los elemetos de X se llaman \textbf{aristas} o ejes.
+Dado v y w $\in$ V, si e=(v,w)$\in$X se dice que v y w son adyacentes y que e es incidente
+a v y w.
+En general denotamos como n a la cantidad de nodos $|V|$ y m a la cantidad de aristas
+$|X|$.
+
+Denominamos multigrafos a los grafos donde puede haber varias aristas entre el mismo
+par de vertices distintos.
+Denominamos pseudografo a los  grafos en el que puede haber varias aristas entre cada par de
+vertices y tambien puede haber aristas (loops) que unan  a un vertice con si mismo.
+
+El grado de un vertice v en el grafo G, $d_G(v)$ es la cantidad de aristas incidentes a v en G.
+Llamamos $\triangle$(G) al maximo grado de los vertices de G y $\delta$(G) al minimo.
+
+Teorema:
+La suma de los grados de los vertices de un grafo es igual a 2 veces el numero de aristas.
+\begin{equation}
+  \sum_{i=1}^n d(v_i)=2m
+\end{equation}
+
+Corolario, la cantidad de vertices de un grafo de grado impar es par.
+\subsection{Propiedades}
+
+Denominamos como grafo \textbf{completo} si todos los vertices son adyacentes entre si.
+Y denominamos a un grafo completo de G=(V,X) como $\bar{\text{G}}=(V,\bar{\text{X}})$,
+al mismo conjunto de vertices y un par de vertices son adyacentes en $\bar{\text{G}}$ si y solo
+si no son adyacentes en G.
+
+Un \textbf{recorrido} en un grafo es una secuencia alternada de vertices y aritas tal que un extremo
+de la arista $e_i$ es $v_{i-1}$ y el otro es $v_i$ para i = 1,...,k.
+Decimos que P es un recorrido entre $v_0$ y $v_k$.
+P = $v_0e_1v_1e_2...v_{k-1}e_kv_k$.
+En los grafos (ni multi ni pseudo) un recorrido queda definido por la secuencia de vertices solamente.
+
+Un \textbf{camino} es un recorrido que no pasa dos veces por el mismo vertice.
+Una \textbf{seccion} de un camino P es una subsecuencia de terminos consecutivos de P y lo denotamos
+como P$_{v_jv_i}$.
+Un \textbf{circuito} es un recorrido que empieza y termina en el mismo vertice.
+Un \textbf{ciclo} o circuito simple es un circuito de 3 o mas vertices que no pasa dos veces por el
+mismo vertice.
+
+Dado un recorrido P, su longitud I(P) es la cantidad de aristas que tiene.
+La \textbf{distancia} entre dos vertices v y w, d(v,w), se define como la longitud del
+recorrido mas corto entre v y w.
+En caso de no existir recorrido se dice que la distancia es infinita.
+La funcion distancia cumple la desigualdad triangular, es conmutativa y es mayor a cero.
+Solo es cero en el caso que pida la distancia entre el mismo nodo.
+
+Proposicion: Si un recorrido P entre v y w tiene longitud d(v,w), P debe ser un camino.
+
+\subsection{Subgrafos}
+Dado un grafo G=($V_G,X_G$), un \textbf{subgrafo} de G es un grafo H=($V_H,X_H$)
+tal que $V_H \subseteq V_G$ y $X_H \subseteq X_G \cap(V_H\times V_H)$.
+Es decir que no dejamos arista sin vertice.
+Lo notamos como $H\subseteq G$.
+\begin{itemize}
+  \item Si  $H\subseteq G$ y $H\neq G$ entonces H es subgrafo propio de G,
+     $H\subset G$.
+   \item H es subgrafo generador de G si  $H\subseteq G$ y $V_G=V_H$.
+   \item H = ($V_h, X_H)$ de G = ($V_G,X_G$), es un subgrafo inducido si todo
+     par u, v $\in V_H$ con (u,v)$\in X_G$ entinces tambien (u,v)$\in X_H$.
+\end{itemize}
+Un subgrafo inducido de G=($V_G,X_G$) por un conjunto de vertices $V'\subseteq V_G$,
+se denota como $G_{[V']}$.
+
+Un grafo se dice \textbf{conexo}si existe camino entre todo par de vertices.
+Una \textbf{componente conexa} de un grafo G es un subgrafo conexo maximal de G.
+
+Un grafo G=(V,X) se dice \textbf{bipartito}si existen dos subconjuntos $V_1, V_2$ del
+conjunto de vertices de V tal que:
+\begin{equation}
+  V=V_1 \cup V_2, \hspace{2cm} V_1 \cap V_2=\emptyset
+\end{equation}
+Y tal que todas las aristas de G tienen un extremo en $V_1$ y otro en $V_2$.
+Es decir que puedo separar los nodos de un grafo en dos subconjuntos y
+los nodos de cada subconjunto no tienen aristas entre si.
+Solo tienen aristas con los nodos del otro subconjunto.
+
+Un grafo bipartito con subconjutos $V_1, V_2$, es \textbf{bipartito completo} si todo
+vertice en $V_1$ es adyacente a todo vertice en $V_2$.
+
+Teorema: un grafo G es pipartito si y solo si no tiene ciclos de longitud impar.
+
+\subsection{Isomorfismo}
+Dados dos grafos G=(V,X) y $G'=(V',X')$ se dicen isomorfos si existe una funcion biyectiva
+f$:V\rightarrow V'$ tal que para todo v,w$\in$V:
+\begin{equation}
+  (v,w)\in X \iff (f(v),f(w))\in X'
+\end{equation}
+La funcion $f$ es llamada funcion de isomorfismo.
+Cuando G y $G'$ son isomorfos lo notaremos como $G\cong G'$ o con abuso de notacion $G=G'$.
+
+Proposicion:
+Si dos grafos G=(V,X) y $\text{G}'=(V',X')$ son isomorfos, entonces:
+\begin{itemize}
+  \item Tienen el mismo numero de vertices
+  \item Tienen el mismo numero de aristas
+  \item Para todo k, $0\leq k\leq n-1$, tienen el mismo numero de vertices de grado k
+  \item Tienen el mismo numero de componentes conexas
+  \item Para todo  k, $1\leq k\leq n-1$, tienen el mismo numero de caminos de
+    longitud k
+\end{itemize}
+No vale la reciproca.
+Es decir dado dos grafos que cumplen todas estas propiedades pueden igual no ser
+isomorfos.
+Son condiciones necesarias no suficientes.
+
+\subsection{representacion}
+Se pueden representar grafos mediante matrices.
+No es muy eficiente a nivel memoria, pero es muy conceptual.
+Tambien se puede representar con Listas que es mas eficiente en espacio.
+
+Matriz de adyacencia.
+$A\in \{0,1\}^{n\times n}$ donde los elementos $a_{ij}$ de A se definen como:
+\begin{equation}
+  a_{ij}= \left\{ \begin{array}{lcc}
+    1 &   si  & G \text{ tiene una arista entre los vertices } v_i \text{ y } v_j \\
+             \\ 0 &  si  & no
+             \end{array}
+   \right.
+\end{equation}
+
+Proposicion:
+Si A es la matriz de adyacencia del grafo G, entonces:
+\begin{itemize}
+  \item La suma de los elementos de la columna $i$ de A (o fila $i$, dado
+    que A es simetrica) es igual a $d(v_i)$.
+  \item Los elementos de la diagonal  de $A^2$ indican los grados de los
+    vertices: $a_{ij}^2=d(v_i)$
+\end{itemize}
+
+\subsection{Digrafos}
+
+Un \textbf{digrafo}G= (V,X) es un par de conjuntos V y X donde V es el conjunto
+de puntos, nodos o vertices y X es un subconjunto del conjunto de los pares \textbf{ordenados} de
+elementos distintos de V.
+A los elementos de X los llamaremos \textbf{arcos}.
+
+Dado un arco e=(u,w) llamaremos al primer elemento u \textbf{cola} de e  y al segundo
+elemento w, \textbf{cabeza} de e.
+
+El \textbf{grado de entrada} $d_{in}(v)$ de un vertice v de un digrafo es la
+cantidad de arcos que llegan a v.
+Es decir, la cantidad de arcos que tienen a v como cabeza.
+
+El \textbf{grado de salida} $d_{out}(v)$ de un vertice v de un digrafo es la cantidad de arcos
+que salen de v.
+Es decir, la cantidad de arcos que tienen a v como cola.
+
+El \textbf{grafo subyacente} de un digrafo es el grafo $G^s$ que resulta de
+remover las direcciones de sus arcos (si para un par de vertices hay arcos en ambas
+direcciones, solo se coloca una arista entre ellos).
+
+Matriz de adyacencia de unn digrafo G.
+$A\in \{0,1\}^{n\times n}$ donde los elementos $a_{ij}$ de A se definen como:
+\begin{equation}
+  a_{ij}= \left\{ \begin{array}{lcc}
+    1 &   si  & G \text{ tiene un arc de } v_i \text{ a } v_j \\
+             \\ 0 &  si  & no
+             \end{array}
+   \right.
+\end{equation}
+En general deja de ser simetrica.
+
+Proposicion:
+Si A es la matriz de adyacencia del digrafo G, entonces:
+\begin{itemize}
+  \item La suma de los elementos de la fila $i$ de A es igual a $d_{out}(v_i)$.
+  \item Los elementos de la columna $i$  de A es igual a $d_{in}(v_i)$
+\end{itemize}
+
+Las definiciones de recorrido, camino, circutio o ciclo son analogas pero ahora son orientadas ya que
+hay que respetar el sentido.
+
+Un digrafo se dice \textbf{fuertemente conexo} si para todo par de vertices u, v existe un
+camino orientado de u a v.
+
 \end{document}
