@@ -277,7 +277,7 @@ Se pueden representar grafos mediante matrices.
 No es muy eficiente a nivel memoria, pero es muy conceptual.
 Tambien se puede representar con Listas que es mas eficiente en espacio.
 
-Matriz de adyacencia.
+\paragraph{Matriz de adyacencia}.
 $A\in \{0,1\}^{n\times n}$ donde los elementos $a_{ij}$ de A se definen como:
 \begin{equation}
   a_{ij}= \left\{ \begin{array}{lcc}
@@ -295,6 +295,38 @@ Si A es la matriz de adyacencia del grafo G, entonces:
   \item Los elementos de la diagonal  de $A^2$ indican los grados de los
     vertices: $a_{ij}^2=d(v_i)$
 \end{itemize}
+
+
+Las ventajas que tiene es que permite saber si existe o no arista entre dos nodos cualquiera
+en O(1).
+Ademas es muy facil de implementar.
+Las desventajas es la complejidad espacial, se necesitan $n^2$ casillas para representar un
+grafo de n nodos.
+Recorrer los vecinos de un nodo siempre tarda O(n).
+
+\paragraph{Lista de adyacencia}:
+Es la lista de vecinos, pues para cada nodo guardamos la lista de nodos para los que existe
+una arista que los conecta.
+Tengo una lista por cada nodo.
+Si la lista de vecinos esta ordenada, para consultar si dos nodos tienen una arista que los une es
+O(log n).
+
+Las ventajas es que la complejidad espacial para un grafo de n nodos y m aristas es O(n+m) osea lineal.
+Ademas recorrer los vecinos de un nodo es o(v) donde v es la cantidad de vecinos.
+
+Las desventajas es que ahora chequear si dos nodos son adyacentes ya no es O(1).
+Ademas es mas dificil de implementar.
+
+\paragraph{Lista de incidencia}:
+Se define como la cantidad de nodos de G y una lista con las aristas de G representadas por
+los dos vertices que conecta (tipo tupla).
+
+Las ventajas son que la complejidad espacial lineal en la cantidad de ariastas.
+Es facil de implementar y puedo ordenar las aristas con algun criterio.
+
+Las desventajas chequear si dos nodos son adyacentes no es O(1) y recorrer los vecinos
+tambien empeora.
+
 
 \subsection{Digrafos}
 
@@ -341,5 +373,89 @@ hay que respetar el sentido.
 
 Un digrafo se dice \textbf{fuertemente conexo} si para todo par de vertices u, v existe un
 camino orientado de u a v.
+
+\section{Clase 4: arboles}
+Un arbol es un grafo conexo sin circuitos simples y minimamente conexos, si le saco cualquier
+arista dejan de ser conexo.
+Un \textbf{puente} es una arista de un grafo G que si G-e tiene mas componentes conextas que G.
+
+Una hoja es un nodo de grado 1.
+Todo arbol no trivial tiene al menos dos hojas.
+Y la cantidad de ariastas (m) de un arbol es igual a la cantidad de nodos (n) - 1.
+
+Un \textbf{bosque} es un grafo sin circuitos simples.
+Dado G un bosque con c componentes conexas entonces m=n-c.
+
+Dado un G cualquiera con c componentes conexas vale que m$\geq$n-c.
+
+Un \textbf{arbol enraizado} es un arbol que tiene un vertice distinguido que llamamos \textbf{raiz}.
+Explicitamente queda definido un arbol dirigido.
+El nivel de un vertice es la distancia de la raiz a ese vertice.
+La \textbf{altura} h de un arbol enraizado es el maximo nivel de sus vertices.
+
+Un arbol se dice (exactamente) m-ario si todos sus vertices, salvo las hojas y la raiz
+tienen grado (exactamente) a lo sumo m+1 y la raiz (exactamente) a lo sumo m.
+Un arbol se dice \textbf{balanceado} si todas sus hojas estan a nivel h o h-1.
+Un arbol se dice \textbf{balanceado completo} si todas sus hojas estan a nivel h.
+
+Los vertices \textbf{internos} de un arbol son aquellos que no son ni hojas ni la raiz.
+Decimos que dos vertices adyacentes tienen relacion padre-hijo, siendo el padre el
+vertice de menor nivel.
+
+Un arbol m-ario de altura h tiene a lo sumo $m^h$ hojas.
+Ademas si tiene L hojas tiene h$\geq log_mL$.
+En caso de ser exactamente m-ario balanceado completo es el igual.
+
+Un \textbf{arbol generador} (AG) de un grafo G es un subgrafo generador (que tiene el msimo
+conjunto de vertices) de G que es arbol.
+Recordemos que es subgrafo si tiene todas las aristas del subgrafo son aristas de G, mismo
+conjunto de vertices.
+
+Todo grafo conexo tienen al menos un arbol generador.
+
+Forma ordenada y sistematica de recorrer los vertices de un arbol o grafo exactamente
+una vez:
+En caso de un grafo, arranco por cualquier nodo denominandolo raiz.
+\begin{item}
+\item a lo ancho (Breadth-First Search - BFS): se comienza por el nivel 0 (raiz)
+  y se visita cada vertice en un nivel antes de pasar al siguiente nivel.
+  Se implementa una lista como cola.
+\item en profundidad (Depth-First Search - DFS: se comienza por la raiz y se explora cada
+  rama lo mas profundo posible antes de retroceder.
+  Se implementa una lista como pila.
+\end{item}
+
+\subsection{Arbol generador minimo}
+Queremos conectar n puntos, pero cada conexion (arista) tiene un costo asociado y queremos minimizarlo.
+Es optimizacion combinatoria.
+
+Algoritmo de Prim (algoritmo golozo):
+\begin{item}
+  \item Contruye incrementalmente dos conjuntos.
+  \begin{item}
+    \item uno de vertices $V_T$, inicializado con un vertice cualquiera.
+    \item uno de aristas $X_T$, que comienza vacio.
+  \end{item}
+  \item En cada iteracion se agrega un elemento a cada conjunto.
+  \item En cada paso, se selecciona la arista de menor costo entre las que tienen un extremo
+    en $V_T$ y el otro en $V \ V_T$.
+  \item Esta arista es agregada a $X_T$ y el extremo a $V_T$.
+  \item Cuando $V_T=V$ el algoritmo termina y las aristas de $X_T$ definen un AGM de G.
+  \item Esta es una eleccion golosa: de un conjunto de aristas candidatas, elige la
+    mejor arista (menor costo).
+\end{item}
+
+Algoritmo de Kruskal:
+\begin{item}
+  \item Ordena las aristas del grafo de forma creciente segun su peso.
+  \item En cada paso elige la siguiente arista que no forme circuito con las aristas ya elegidas.
+  \item El algoritmo para cuando selecciona n-1 aristas.
+  \item Tambien es un algoritmo goloso.
+\end{item}
+
+
+
+
+
 
 \end{document}
