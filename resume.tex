@@ -416,26 +416,26 @@ Todo grafo conexo tienen al menos un arbol generador.
 Forma ordenada y sistematica de recorrer los vertices de un arbol o grafo exactamente
 una vez:
 En caso de un grafo, arranco por cualquier nodo denominandolo raiz.
-\begin{item}
+\begin{itemize}
 \item a lo ancho (Breadth-First Search - BFS): se comienza por el nivel 0 (raiz)
   y se visita cada vertice en un nivel antes de pasar al siguiente nivel.
   Se implementa una lista como cola.
 \item en profundidad (Depth-First Search - DFS: se comienza por la raiz y se explora cada
   rama lo mas profundo posible antes de retroceder.
   Se implementa una lista como pila.
-\end{item}
+\end{itemize}
 
 \subsection{Arbol generador minimo}
 Queremos conectar n puntos, pero cada conexion (arista) tiene un costo asociado y queremos minimizarlo.
 Es optimizacion combinatoria.
 
 Algoritmo de Prim (algoritmo golozo):
-\begin{item}
+\begin{itemize}
   \item Contruye incrementalmente dos conjuntos.
-  \begin{item}
+  \begin{itemize}
     \item uno de vertices $V_T$, inicializado con un vertice cualquiera.
     \item uno de aristas $X_T$, que comienza vacio.
-  \end{item}
+  \end{itemize}
   \item En cada iteracion se agrega un elemento a cada conjunto.
   \item En cada paso, se selecciona la arista de menor costo entre las que tienen un extremo
     en $V_T$ y el otro en $V \ V_T$.
@@ -443,19 +443,59 @@ Algoritmo de Prim (algoritmo golozo):
   \item Cuando $V_T=V$ el algoritmo termina y las aristas de $X_T$ definen un AGM de G.
   \item Esta es una eleccion golosa: de un conjunto de aristas candidatas, elige la
     mejor arista (menor costo).
-\end{item}
+\end{itemize}
 
 Algoritmo de Kruskal:
-\begin{item}
+\begin{itemize}
   \item Ordena las aristas del grafo de forma creciente segun su peso.
   \item En cada paso elige la siguiente arista que no forme circuito con las aristas ya elegidas.
   \item El algoritmo para cuando selecciona n-1 aristas.
   \item Tambien es un algoritmo goloso.
-\end{item}
+\end{itemize}
 
 
 
 
+\section{5 clase: Algoritmos para determinar caminos minimos}
+Ejemplo clasico, camino minimo de un mapa de un punto a otro.
 
+Representamos el mapa con un grafo donde:
+\begin{itemize}
+  \item Los vertices representan las intersecciones de las calles.
+  \item Las aristas (o arcos si es orientado) los segmentos de calles entre dos intersecciones adyacentes.
+  \item La funcion de peso corresponde a la longitud de este segmento.
+\end{itemize}
 
+Estos pesos pueden ser cualquier metrica.
+Desde la distancia,  tiempo que se tarda en recorrerla, o cualquier
+cantidad que se acumule linealmente a lo largo de un camino y querramos minimizar.
+
+Sea G=(V,X) un grafo y l:$X\rightarrow R$ una funcion de longitud/peso para las aristas de G.
+
+La longitud de un camino C entre dos cerices v y u es la suma de las longitudes de las
+aristas del camino:
+\begin{equation}
+  l(C) = \sum_{e\in C} l(e)
+\end{equation}
+
+Un camino minimo $C^0$ entre v y u es un camino entre v y u tal que l$(C^0)$=min$\{l(C)|C \text{
+  es un camino entre v y u}\}$
+
+Existen varias variatnes:
+\begin{itemize}
+  \item Unico origen - unico destino: Determinar un camino minimo entre dos vertices especificos, v y u.
+    (no vamos a ver algoritmos de esto, si no que veremos de unico origen - multiples destinos que son casos generales
+    de este).
+  \item Unico origen - multiples destinos: Determinar un camino minimo desde un vertice especifico v al resto
+    de los vertices de G.
+  \item Multiples origenes - multiples destinos: Determinar un camino minimo entre todo par de vertices de G.
+\end{itemize}
+
+\paragraph{Propiedad de subestrcutura optima de un camino minimo:}
+ Dado un digrafo G=(V,X) con una funcion de peso l:$X\rightarrow R$, sea  P: $v_1,...,v_k$ un camino
+ minimo de $v_1$ a $v_k$.
+ Entonces $\forall 1\geq i \geq j \geq k, P_{v_iv_j}$ es un camino minimo desde $v_i$ a $v_j$.
+ Recordar el principio de optimimalidad de Bellman.
+
+ 13:24
 \end{document}
